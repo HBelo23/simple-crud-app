@@ -7,19 +7,20 @@ import { UserPlus, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface PersonFormProps {
-  onSubmit: (data: { nome: string; idade: number; cidade: string }) => Promise<boolean>;
+  onSubmit: (data: { nome: string; idade: number; cidade: string; pais: string }) => Promise<boolean>;
 }
 
 export function PersonForm({ onSubmit }: PersonFormProps) {
   const [nome, setNome] = useState('');
   const [idade, setIdade] = useState('');
   const [cidade, setCidade] = useState('');
+  const [pais, setPais] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!nome.trim() || !idade || !cidade.trim()) {
+    if (!nome.trim() || !idade || !cidade.trim() || !pais.trim()) {
       toast.error('Preencha todos os campos');
       return;
     }
@@ -29,6 +30,7 @@ export function PersonForm({ onSubmit }: PersonFormProps) {
       nome: nome.trim(),
       idade: parseInt(idade),
       cidade: cidade.trim(),
+      pais: pais.trim(),
     });
     setLoading(false);
 
@@ -37,6 +39,7 @@ export function PersonForm({ onSubmit }: PersonFormProps) {
       setNome('');
       setIdade('');
       setCidade('');
+      setPais('');
     } else {
       toast.error('Erro ao cadastrar pessoa');
     }
@@ -87,6 +90,17 @@ export function PersonForm({ onSubmit }: PersonFormProps) {
               placeholder="Digite a cidade"
               value={cidade}
               onChange={(e) => setCidade(e.target.value)}
+              disabled={loading}
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="pais">País</Label>
+            <Input
+              id="pais"
+              placeholder="Digite o país"
+              value={pais}
+              onChange={(e) => setPais(e.target.value)}
               disabled={loading}
             />
           </div>
