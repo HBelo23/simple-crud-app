@@ -68,6 +68,7 @@ export function PersonList({ people, loading, error, onDelete, onRefresh }: Pers
                 <TableHead>Nome</TableHead>
                 <TableHead className="text-center">Idade</TableHead>
                 <TableHead>Cidade</TableHead>
+                <TableHead>País</TableHead>
                 <TableHead className="w-16"></TableHead>
               </TableRow>
             </TableHeader>
@@ -77,6 +78,7 @@ export function PersonList({ people, loading, error, onDelete, onRefresh }: Pers
                   <TableCell className="font-medium">{person.nome}</TableCell>
                   <TableCell className="text-center">{person.idade}</TableCell>
                   <TableCell>{person.cidade}</TableCell>
+                  <TableCell>{person.pais}</TableCell>
                   <TableCell>
                     <Button
                       variant="ghost"

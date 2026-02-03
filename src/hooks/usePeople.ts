@@ -20,9 +20,9 @@ export function usePeople() {
       setError(err instanceof Error ? err.message : 'Erro desconhecido');
       // Fallback para dados mockados quando API não está disponível
       setPeople([
-        { id: 1, nome: 'João Silva', idade: 28, cidade: 'São Paulo' },
-        { id: 2, nome: 'Maria Santos', idade: 34, cidade: 'Rio de Janeiro' },
-        { id: 3, nome: 'Pedro Costa', idade: 22, cidade: 'Belo Horizonte' },
+        { id: 1, nome: 'João Silva', idade: 28, cidade: 'São Paulo', pais: 'Brasil' },
+        { id: 2, nome: 'Maria Santos', idade: 34, cidade: 'Rio de Janeiro', pais: 'Brasil' },
+        { id: 3, nome: 'Pedro Costa', idade: 22, cidade: 'Belo Horizonte', pais: 'Brasil' },
       ]);
     } finally {
       setLoading(false);

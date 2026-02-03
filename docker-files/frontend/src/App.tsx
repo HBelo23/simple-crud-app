@@ -6,6 +6,7 @@ interface Person {
   nome: string
   idade: number
   cidade: string
+  pais: string
 }
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
@@ -19,6 +20,7 @@ function App() {
   const [nome, setNome] = useState('')
   const [idade, setIdade] = useState('')
   const [cidade, setCidade] = useState('')
+  const [pais, setPais] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
   const fetchPeople = async () => {
@@ -41,20 +43,21 @@ function App() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!nome || !idade || !cidade) return
+    if (!nome || !idade || !cidade || !pais) return
 
     setSubmitting(true)
     try {
       const response = await fetch(`${API_URL}/pessoas`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome, idade: parseInt(idade), cidade }),
+        body: JSON.stringify({ nome, idade: parseInt(idade), cidade, pais }),
       })
 
       if (response.ok) {
         setNome('')
         setIdade('')
         setCidade('')
+        setPais('')
         fetchPeople()
         setActiveTab('list')
       }
@@ -160,6 +163,19 @@ function App() {
                   required
                 />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  País
+                </label>
+                <input
+                  type="text"
+                  value={pais}
+                  onChange={(e) => setPais(e.target.value)}
+                  placeholder="Digite o país"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  required
+                />
+              </div>
               <button
                 type="submit"
                 disabled={submitting}
@@ -196,6 +212,9 @@ function App() {
                     <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">
                       Cidade
                     </th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-600">
+                      País
+                    </th>
                     <th className="px-4 py-3 text-right text-sm font-medium text-gray-600">
                       Ações
                     </th>
@@ -207,6 +226,7 @@ function App() {
                       <td className="px-4 py-3 text-gray-800">{person.nome}</td>
                       <td className="px-4 py-3 text-gray-600">{person.idade}</td>
                       <td className="px-4 py-3 text-gray-600">{person.cidade}</td>
+                      <td className="px-4 py-3 text-gray-600">{person.pais}</td>
                       <td className="px-4 py-3 text-right">
                         <button
                           onClick={() => handleDelete(person.id)}

@@ -56,15 +56,15 @@ app.get('/api/pessoas/:id', async (req, res) => {
 // POST - Criar nova pessoa
 app.post('/api/pessoas', async (req, res) => {
   try {
-    const { nome, idade, cidade } = req.body;
+    const { nome, idade, cidade, pais } = req.body;
     
-    if (!nome || !idade || !cidade) {
-      return res.status(400).json({ error: 'Nome, idade e cidade são obrigatórios' });
+    if (!nome || !idade || !cidade || !pais) {
+      return res.status(400).json({ error: 'Nome, idade, cidade e país são obrigatórios' });
     }
     
     const result = await pool.query(
-      'INSERT INTO pessoas (nome, idade, cidade) VALUES ($1, $2, $3) RETURNING *',
-      [nome, idade, cidade]
+      'INSERT INTO pessoas (nome, idade, cidade, pais) VALUES ($1, $2, $3, $4) RETURNING *',
+      [nome, idade, cidade, pais]
     );
     
     res.status(201).json(result.rows[0]);
@@ -78,11 +78,11 @@ app.post('/api/pessoas', async (req, res) => {
 app.put('/api/pessoas/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { nome, idade, cidade } = req.body;
+    const { nome, idade, cidade, pais } = req.body;
     
     const result = await pool.query(
-      'UPDATE pessoas SET nome = $1, idade = $2, cidade = $3 WHERE id = $4 RETURNING *',
-      [nome, idade, cidade, id]
+      'UPDATE pessoas SET nome = $1, idade = $2, cidade = $3, pais = $4 WHERE id = $5 RETURNING *',
+      [nome, idade, cidade, pais, id]
     );
     
     if (result.rows.length === 0) {

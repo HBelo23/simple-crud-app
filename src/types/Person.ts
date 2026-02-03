@@ -3,4 +3,5 @@ export interface Person {
   nome: string;
   idade: number;
   cidade: string;
+  pais: string;
 }
